@@ -16,7 +16,7 @@ export const SortSelect: FC<IParams> = ({ setSortOrder }) => {
   return (
     <Select
       options={options}
-      onChange={(value: SortOrder) => setSortOrder(value)}
+      onChange={(value) => setSortOrder(value as SortOrder)}
       placeholder="Sort..."
     />
   );

@@ -159,6 +159,11 @@ export type SanityAssetSourceData = {
 
 export type AllSanitySchemaTypes = Product | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
+// Source: ./src/modules/product/sanity/queries/categories.ts
+// Variable: CATEGORIES_QUERY
+// Query: array::unique(*[_type == "product" && defined(category)].category)
+export type CATEGORIES_QUERYResult = Array<string | null>;
+
 // Source: ./src/modules/product/sanity/queries/product.ts
 // Variable: PRODUCT_QUERY
 // Query: *[_type == "product" && slug.current == $slug][0]{  title, body, "imageUrl": image.asset->url, category, description, availability, price}
@@ -174,7 +179,7 @@ export type PRODUCT_QUERYResult = {
 
 // Source: ./src/modules/product/sanity/queries/products.ts
 // Variable: PRODUCTS_QUERY
-// Query: *[  _type == "product"][0...10]{_id, title, price, slug, "imageUrl": image.asset->url}
+// Query: *[  _type == "product"]{_id, title, price, slug, "imageUrl": image.asset->url}
 export type PRODUCTS_QUERYResult = Array<{
   _id: string;
   title: string | null;
@@ -198,8 +203,9 @@ export type RELATED_PRODUCTS_QUERYResult = Array<{
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
+    "array::unique(*[_type == \"product\" && defined(category)].category)": CATEGORIES_QUERYResult;
     "*[_type == \"product\" && slug.current == $slug][0]{\n  title, body, \"imageUrl\": image.asset->url, category, description, availability, price\n}": PRODUCT_QUERYResult;
-    "*[\n  _type == \"product\"\n][0...10]{_id, title, price, slug, \"imageUrl\": image.asset->url}": PRODUCTS_QUERYResult;
+    "*[\n  _type == \"product\"\n]{_id, title, price, slug, \"imageUrl\": image.asset->url}": PRODUCTS_QUERYResult;
     "*[\n  _type == \"product\" &&\n  category == $category &&\n  slug.current != $slug\n] | order(_createdAt desc)[0...4] {\n  _id,\n  title,\n  price,\n  \"imageUrl\": image.asset->url,\n  slug\n}": RELATED_PRODUCTS_QUERYResult;
   }
 }
