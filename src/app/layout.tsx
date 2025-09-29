@@ -4,8 +4,8 @@ import "./globals.css";
 import { MainLayout } from "@/modules/common/layouts";
 
 export const metadata: Metadata = {
-  title: "Test app",
-  description: "Test app description",
+  title: "Next Shop",
+  description: "Next Shop description",
 };
 
 export default function RootLayout({
