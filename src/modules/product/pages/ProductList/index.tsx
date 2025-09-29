@@ -93,9 +93,9 @@ export const ProductListPage: FC = () => {
           <CheckboxDropdown
             options={
               fetchedCategories
-                ? fetchedCategories.map((category: string) => {
-                    return { label: category, value: category };
-                  })
+                ? fetchedCategories.map((category) => {
+                    return category ? { label: category, value: category } : null;
+                  }).filter(category => !!category)
                 : []
             }
             onChange={setCategories}
